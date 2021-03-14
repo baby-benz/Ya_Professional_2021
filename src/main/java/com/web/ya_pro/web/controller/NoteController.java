@@ -6,6 +6,8 @@ import com.web.ya_pro.web.dto.NewNoteDto;
 import com.web.ya_pro.web.dto.NoteDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +19,8 @@ import java.util.List;
 public class NoteController {
     private final ControllerService controllerService;
 
-    @PostMapping("/notes")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/notes", consumes = MediaType.APPLICATION_JSON_VALUE)
     public NoteDto postNote(@RequestBody NewNoteDto note) {
         return controllerService.addNote(note);
     }
@@ -32,7 +35,7 @@ public class NoteController {
         return controllerService.getNotes();
     }
 
-    @GetMapping("/notes/{id}")
+    @GetMapping(value = "/notes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteDto getNote(@PathVariable Long id) throws NoteNotFoundException {
         return controllerService.getNote(id);
     }
@@ -42,7 +45,7 @@ public class NoteController {
         return controllerService.getNotesByParams(params);
     }
 
-    @PutMapping("/notes/{id}")
+    @PutMapping(value = "/notes/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public NoteDto putNote(@PathVariable Long id, @RequestBody NewNoteDto params) throws NoteNotFoundException {
         return controllerService.updateNote(id, params);
     }
