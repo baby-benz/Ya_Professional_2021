@@ -41,7 +41,7 @@ public class NoteController {
     }
 
     @GetMapping("/notes")
-    public List<NoteDto> getNoteByParams(@RequestParam NoteDto params) throws NoteNotFoundException {
+    public List<NoteDto> getNoteByParams(NoteDto params) throws NoteNotFoundException {
         return controllerService.getNotesByParams(params);
     }
 
